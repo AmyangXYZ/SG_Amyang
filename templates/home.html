@@ -1,0 +1,64 @@
+{{ define "home" }}
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>SG_Amyang | Home</title>
+        <link rel="stylesheet" href="/static/layout.css">
+        <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+        <script src="/static/jquery-3.1.1.min.js"></script>
+    </head>
+    <body>
+        <script src="/static/base.js"></script>
+        <div class="header">
+            <div class="container">
+                <div class="slot-l">
+                    <h1><a href="/">SweetyGo</a></h1>
+                </div>
+                <div class="slot-r">
+                    <ul>
+                        <li><a href="/">home</a></li>
+                        <li><a>security</a></li>
+                        <li><a>develop</a></li>
+                        <li><a>joy</a></li>
+                        <span id="sidebar-button"><i class="fa fa-bars"></i></span>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="cover">
+            <img src="/static/cover.jpg">
+            <div class="wrapper"></div>
+        </div>
+   
+        <div class="bg">
+            <div class="section">
+                <div class="section-head">
+                    <h3 class="section-title h6">Latest stories</h3>
+                </div>
+            
+                <div class="posts">
+
+                    </div>
+            </div> 
+
+            <div class="footer">
+                <div class="footer-container">
+                    <p>Powered by <a href="https://github.com/AmyangXYZ/sweetygo">SweetyGo</a><br>
+                       <i class="fa fa-copyright"></i> 2018 Amyang</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-header-wrapper">
+                    <h4>Amyang</h4>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-overlay"></div>
+    </body>
+</html>
+{{ end }}
