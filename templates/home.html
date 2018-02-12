@@ -8,20 +8,30 @@
         <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
         <script src="/static/jquery-3.1.1.min.js"></script>
     </head>
-    <body>
+    
+    <body style="height:50vh">
+        <input type="checkbox" id="sidebar-button">
         <script src="/static/base.js"></script>
+        
         <div class="header">
             <div class="container">
                 <div class="slot-l">
-                    <h1><a href="/">SweetyGo</a></h1>
+                    <h1><a href="/">SG-Amyang</a></h1>
                 </div>
                 <div class="slot-r">
                     <ul>
-                        <li><a href="/">home</a></li>
-                        <li><a>security</a></li>
-                        <li><a>develop</a></li>
-                        <li><a>joy</a></li>
-                        <span id="sidebar-button"><i class="fa fa-bars"></i></span>
+                        <li><a href="#/cat/sec">security</a></li>
+                        <li><a href="#/cat/dev">develop</a></li>
+                        <li><a href="#/cat/dsp">signal</a></li>
+                        <li><a href="#/cat/joy">joy</a></li>
+                        <li class="sub-menu"><a>admin</a>
+                            <div class="sub-menu-content">
+                                <a href="/#" id="sub-menu-content-item">Login</a>
+                                <a href="/#" id="sub-menu-content-item">New</a>
+                                <a href="/#" id="sub-menu-content-item">Upload</a>
+                            </div>
+                        </li>
+                        <label for="sidebar-button"><span><i class="fa fa-bars"></i></span></label>
                     </ul>
                 </div>
             </div>
@@ -37,16 +47,17 @@
                 <div class="section-head">
                     <h3 class="section-title h6">Latest stories</h3>
                 </div>
-            
+                <div class="section-head">
+                        <h3 class="section-title h6">Latest sssstories</h3>
+                    </div>
                 <div class="posts">
-
                     </div>
             </div> 
 
             <div class="footer">
                 <div class="footer-container">
-                    <p>Powered by <a href="https://github.com/AmyangXYZ/sweetygo">SweetyGo</a><br>
-                       <i class="fa fa-copyright"></i> 2018 Amyang</p>
+                    <p> <i class="fa fa-copyright"></i> 2018 <i class="fa fa-heart"></i> Amyang<br>
+                        Powered by <a href="https://github.com/AmyangXYZ/sweetygo">SweetyGo</a></p>
                 </div>
             </div>
         </div>
@@ -55,10 +66,24 @@
             <div class="sidebar-header">
                 <div class="sidebar-header-wrapper">
                     <h4>Amyang</h4>
+                    <label for="sidebar-button"><span><i class="fa fa-times"></i></span></label>
                 </div>
             </div>
+            <div class="sidebar-content">
+                <h5>About me</h5>
+                <p> <i class="fa fa-mars fa-fw"></i>&nbsp;An average student.<br></p>
+                <p> <i class="fa fa-user-secret fa-fw"></i>&nbsp;Major in EE but love IS.<br></p>
+                <p> <i class="fa fa-code fa-fw"></i>&nbsp;Go & Python.</p>
+            </div>
+            <div class="sidebar-content">
+                <h5>Get in touch</h5>
+                <p><a href="https://github.com/AmyangXYZ"><i class="fa fa-github-square fa-2x"></i></a>
+                    <a href="mailto:amyang.xyz@gmail.com" style="color:#d94a39;"><i class="fa fa-envelope-square fa-2x"></i></a>
+                    <a href="https://twitter.com/AmyangXYZ" style="color:#48c4d2;"><i class="fa fa-twitter-square fa-2x"></i></a>
+                </p>
+            </div>
         </div>
-        <div class="sidebar-overlay"></div>
+        <label for="sidebar-button" class="sidebar-overlay"></label>
     </body>
 </html>
 {{ end }}
