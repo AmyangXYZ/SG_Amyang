@@ -3,7 +3,8 @@ package controller
 import (
 	"time"
 
-	"../models"
+	"../model"
+
 	"github.com/AmyangXYZ/sweetygo"
 	jwt "github.com/dgrijalva/jwt-go"
 )
@@ -21,7 +22,7 @@ func LoginPage(ctx *sweetygo.Context) {
 // Login API Handler.
 func Login(ctx *sweetygo.Context) {
 	if ctx.Param("name") != "" && ctx.Param("passwd") != "" {
-		name, passwd, err := models.GetAdmin()
+		name, passwd, err := model.GetAdmin()
 		if err != nil {
 			ctx.JSON(500, "Database Error", "error")
 			return

@@ -26,7 +26,7 @@ func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	app.GET("/", controller.Home)
 	app.GET("/about", controller.About)
 	app.GET("/upload", controller.UploadPage)
-	app.Static("/uploads", "/home/amyang/Projects/SG_Amyang/uploads")
+	app.Static("/uploadfolder", "/home/amyang/Projects/SG_Amyang/uploadfolder")
 
 	app.GET("/posts/:title", controller.Show)
 	app.GET("/login", controller.LoginPage)
