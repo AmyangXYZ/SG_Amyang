@@ -1,0 +1,40 @@
+{{ define "posts/show" }}
+    
+    {{ template "share/header" . }}
+        <div class="bg">
+                <div class="section">
+                    <div class="section-head">
+                        <header class="entry-header">
+                                <div class="entry-title">
+                                    <a href="/posts/{{ .post.Title | space2hyphen }}">{{ .post.Title }}</a>
+                                </div>
+                                <div class="entry-meta">
+                                    <div class="meta-item">
+                                        By Amyang
+                                    </div>
+                                    <div class="meta-item">
+                                        In 
+                                        <a href="/posts/category/{{ .post.Cat }}">{{ .post.Cat }}</a>
+                                    </div>
+                                    <div class="meta-item-time">
+                                        {{ .post.Time }}
+                                    </div>
+                                </div>
+                            </header>
+                    </div>
+                    <div class="section-content">
+                        <div class="posts">
+                            <article class="post">
+                                <div class="entry-content">
+                                    {{ .post.HTML | unescaped }}
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            {{ template "share/footer" }}
+        </div>
+    </body>
+</html>
+
+{{end}}

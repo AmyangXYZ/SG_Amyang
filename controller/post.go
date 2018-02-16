@@ -1,21 +1,77 @@
 package controller
 
 import (
+	"fmt"
+	"strings"
+
 	"../model"
 	"github.com/AmyangXYZ/sweetygo"
 )
 
 // Show Post Page Handler.
 func Show(ctx *sweetygo.Context) {
-	ctx.Render(200, "post/show")
+	if title := ctx.Param("title"); title != "" {
+		title := strings.Replace(title, "-", " ", -1)
+		post, err := model.GetPostByTitle(title)
+		if err != nil {
+			ctx.Error("get post error", 200)
+			return
+		}
+		if post.ID == 0 {
+			ctx.Error("404 page not found", 404)
+			return
+		}
+		ctx.Set("post", post)
+		ctx.Set("title", title)
+		ctx.Set("show", true)
+		ctx.Render(200, "posts/show")
+	}
+}
+
+// Cat shows posts sorted by category.
+func Cat(ctx *sweetygo.Context) {
+	if cat := ctx.Param("cat"); cat != "" {
+		posts, err := model.GetPostsByCat(cat, "1")
+		if err != nil {
+			ctx.Error("get posts error", 200)
+			return
+		}
+		ctx.Set("posts", posts)
+		b := []byte(cat)
+		b[0] -= 32 // uppercase
+		cat = string(b)
+		ctx.Set("title", cat)
+		ctx.Render(200, "posts/cat")
+	}
+}
+
+// Page shows 5 posts per page.
+func Page(ctx *sweetygo.Context) {
+	ctx.Text(200, "page is "+ctx.Param("n"))
+}
+
+// NewPage is Create Post Page Handler
+func NewPage(ctx *sweetygo.Context) {
+	ctx.Set("title", "New")
+	ctx.Set("editor", true)
+	ctx.Render(200, "posts/new")
+}
+
+// EditPage is Edit Post Page Handler
+func EditPage(ctx *sweetygo.Context) {
+	ctx.Set("title", "Edit")
+	ctx.Set("editor", true)
+	title := ctx.Param("title")
+	title = strings.Replace(title, "-", " ", -1)
+	post, _ := model.GetPostByTitle(title)
+	ctx.Set("post", post)
+	ctx.Render(200, "posts/update")
 }
 
 // Get Post API Handler.
 //
 // Usage:
-// 	"/api/post?title=Hello" 		-> the post.
-// 	"/api/post?page=1"      		-> 5 posts (perpage default is 5).
-// 	"/api/post?cat=sec&page=1"		-> 5 posts about Sec
+// 	"/api/posts/Hello" 		-> the post.
 func Get(ctx *sweetygo.Context) {
 	if title := ctx.Param("title"); title != "" {
 		post, err := model.GetPostByTitle(title)
@@ -69,15 +125,16 @@ func Get(ctx *sweetygo.Context) {
 // New Post API Handler.
 //
 // Usage:
-//  "/api/post" -X POST -d "title=xx&cat=xx&text=xx"
+//  "/api/posts/new" -X POST -d "title=xx&cat=xx&text=xx"
 func New(ctx *sweetygo.Context) {
 	title := ctx.Param("title")
 	cat := ctx.Param("cat")
-	text := ctx.Param("text")
-	if title != "" && cat != "" && text != "" {
-		err := model.NewPost(title, cat, text)
+	html := ctx.Param("html")
+	md := ctx.Param("md")
+	if title != "" && cat != "" && html != "" && md != "" {
+		err := model.NewPost(title, cat, html, md)
 		if err != nil {
-			ctx.JSON(200, "New Post Error", "error")
+			ctx.JSON(200, "create post error", "error")
 			return
 		}
 		ctx.JSON(201, "", "success")
@@ -93,11 +150,13 @@ func New(ctx *sweetygo.Context) {
 func Update(ctx *sweetygo.Context) {
 	title := ctx.Param("title")
 	cat := ctx.Param("cat")
-	text := ctx.Param("text")
-	if title != "" && cat != "" && text != "" {
-		err := model.UpdatePost(title, cat, text)
+	html := ctx.Param("html")
+	md := ctx.Param("md")
+	if title != "" && cat != "" && html != "" && md != "" {
+		err := model.UpdatePost(title, cat, html, md)
 		if err != nil {
-			ctx.JSON(200, "Update Post Error", "error")
+			fmt.Println(err)
+			ctx.JSON(200, "update post error", "error")
 			return
 		}
 		ctx.JSON(201, "", "success")

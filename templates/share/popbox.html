@@ -1,0 +1,41 @@
+{{ define "share/popbox" }}
+
+<div class="pop-box" id="signin-box">
+    <div class="pop-box-header">
+        <h3>Sign In</h3>
+    </div>
+    <div class="pop-box-dform">
+        <form class="pop-box-form" id="SignInForm" action="/api/token" method="POST">
+            <ul>
+                <li>
+                   <strong> Username: </strong>
+                    <input name="name" type="text" style="margin-left:10px">
+                </li>
+                <li>
+                    <strong>Password: </strong>
+                    <input name="passwd" type="password" style="margin-left:10px">
+                </li>
+                <li>
+                    <input class="button" name="submit" value="submit" type="submit">
+                </li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+<div class="pop-box" id="upload-box">
+    <div class="pop-box-header">
+        <h3>Upload File</h3>
+    </div>
+    <div class="pop-box-dform">
+        <form class="pop-box-form" id="UploadForm" action="/api/files" method="POST">
+            <ul>  
+                <li> <input type="file" name="file"> </li>
+                <li><p id="filePath">&nbsp;</p></li>
+                <li><input class="button" type=submit value="Upload" name="submit"></li>
+            </ul>
+        </form>
+    </div>
+</div>
+
+{{ end }}

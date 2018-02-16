@@ -1,0 +1,54 @@
+{{ define "posts/cat" }}
+
+    {{ template  "share/header" .}}
+
+        <div class="bg">
+                <div class="section">
+                    <div class="section-head">
+                        <h3 class="section-title h6">{{ .title }}</h3>
+                    </div>
+                    <div class="section-content">
+                        <div class="posts">
+                            {{ range .posts }}
+                            <article class="post">
+                                <header class="entry-header">
+                                    <div class="entry-title">
+                                        <a href="/posts/{{ .Title | space2hyphen }}">{{ .Title }}</a>
+                                    </div>
+                                    <div class="entry-meta">
+                                        <div class="meta-item">
+                                            By Amyang
+                                        </div>
+                                        <div class="meta-item">
+                                            In 
+                                            <a href="/posts/category/{{ .Cat }}">{{ .Cat }}</a>
+                                        </div>
+                                        <div class="meta-item-time">
+                                            {{ .Time }}
+                                        </div>
+                                    </div>
+                                </header>
+                                <div class="entry-content">
+                                    
+                                </div>
+                                <div class="entry-footer">
+                                    <a class="button" href="/">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
+                                </div>
+                            </article>
+                            {{ end }}
+                                <div class="pagination">
+                                    <a class="button" id="loadmore" style="background:#333333">load more</a>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+            {{ template "share/footer" }}
+            
+        </div>
+   
+    </body>
+
+</html>
+
+{{ end }}

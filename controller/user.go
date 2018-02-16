@@ -14,11 +14,6 @@ var (
 	SecretKey = "secret"
 )
 
-// LoginPage Handler.
-func LoginPage(ctx *sweetygo.Context) {
-	ctx.Render(200, "posts/show")
-}
-
 // Login API Handler.
 func Login(ctx *sweetygo.Context) {
 	if ctx.Param("name") != "" && ctx.Param("passwd") != "" {

@@ -10,7 +10,9 @@ import (
 
 var (
 	requireJWTMap = map[string]string{
-		"/api/post": "!GET",
+		"/api/posts":   "!GET",
+		"/api/posts/*": "!GET",
+		"/api/files":   "POST",
 	}
 )
 
@@ -23,19 +25,22 @@ func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 // SetRouter for SweetyGo APP.
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
+
 	app.GET("/", controller.Home)
-	app.GET("/about", controller.About)
-	app.GET("/upload", controller.UploadPage)
-	app.Static("/uploadfolder", "/home/amyang/Projects/SG_Amyang/uploadfolder")
 
+	app.Static("/uploadsfolder", "/home/amyang/Projects/SG_Amyang/uploadsfolder")
+
+	app.GET("/posts/new", controller.NewPage)
+	app.GET("/posts/category/:cat", controller.Cat)
 	app.GET("/posts/:title", controller.Show)
-	app.GET("/login", controller.LoginPage)
+	app.GET("/posts/:title/edit", controller.EditPage)
 
-	app.GET("/api/post", controller.Get)
-	app.POST("/api/post", controller.New)
-	app.PUT("/api/post", controller.Update)
+	app.POST("/api/posts", controller.New)
+	app.GET("/api/posts/page/:n", controller.Page)
+	app.GET("/api/posts/:title", controller.Get)
+	app.PUT("/api/posts/:title", controller.Update)
 
-	app.POST("/api/file", controller.Upload)
+	app.POST("/api/files", controller.Upload)
 
 	app.POST("/api/token", controller.Login)
 	return app

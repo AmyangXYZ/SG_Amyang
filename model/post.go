@@ -10,7 +10,8 @@ type Post struct {
 	ID    int    `json:"id"`
 	Title string `json:"title"`
 	Cat   string `json:"cat"`
-	Text  string `json:"text"`
+	HTML  string `json:"html"`
+	MD    string `json:"md"`
 	Time  string `json:"time"`
 }
 
@@ -25,7 +26,7 @@ func GetPosts(page string) ([]Post, error) {
 		return posts, err
 	}
 	for rows.Next() {
-		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.Text, &post.Time)
+		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.HTML, &post.MD, &post.Time)
 		posts = append(posts, post)
 	}
 	return posts, nil
@@ -40,7 +41,7 @@ func GetPostByTitle(title string) (Post, error) {
 		return post, err
 	}
 	for rows.Next() {
-		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.Text, &post.Time)
+		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.HTML, &post.MD, &post.Time)
 	}
 	return post, nil
 }
@@ -56,29 +57,29 @@ func GetPostsByCat(cat string, page string) ([]Post, error) {
 		return posts, err
 	}
 	for rows.Next() {
-		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.Text, &post.Time)
+		rows.Scan(&post.ID, &post.Title, &post.Cat, &post.HTML, &post.MD, &post.Time)
 		posts = append(posts, post)
 	}
 	return posts, nil
 }
 
 // NewPost inserts a new post into database.
-func NewPost(title, cat, text string) error {
+func NewPost(title, cat, html, md string) error {
 	time := time.Now().Format("2006-01-02 15:04:05")
-	stmt, err := db.Prepare("INSERT posts SET title=?, cat=?, text=?, time=?")
+	stmt, err := db.Prepare("INSERT posts SET title=?, cat=?, html=?, md=?, time=?")
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(title, cat, text, time)
+	_, err = stmt.Exec(title, cat, html, md, time)
 	return err
 }
 
 // UpdatePost updates an existed post.
-func UpdatePost(title, cat, text string) error {
-	stmt, err := db.Prepare("UPDATE posts SET title=?, cat=?, text=? WHERE title=?")
+func UpdatePost(title, cat, html, md string) error {
+	stmt, err := db.Prepare("UPDATE posts SET title=?, cat=?, html=?, md=? WHERE title=?")
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(title, cat, text, title)
+	_, err = stmt.Exec(title, cat, html, md, title)
 	return err
 }
