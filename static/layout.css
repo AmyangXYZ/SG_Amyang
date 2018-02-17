@@ -1,13 +1,22 @@
-@import url(http://fonts.font.im/css?family=Josefin+Sans:400,600);
-@import url(http://fonts.font.im/css?family=Domine);
-@import url(http://fonts.font.im/css?family=Ubuntu+Mono);
+@font-face {
+    font-family: "Josefin";
+    src: url("/static/JosefinSans.ttf")
+}
+@font-face {
+    font-family: "Domine";
+    src: url("/static/Domine.ttf")
+}
+@font-face {
+    font-family: "Ubuntu Mono";
+    src: url("/static/UbuntuMono.ttf")
+}
 
 html {
     font-size: 62.5%;
 }
 
 body {
-    font-family: 'Josefin Sans', sans-serif;
+    font-family: "Josefin";
     margin: 0;
     font-size: 1.6em;
     color: #444444;
