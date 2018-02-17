@@ -6,4 +6,4 @@ RESTFul API.
 
 Powered by [SweetyGo](https://github.com/AmyangXYZ/sweetygo)
 
-Backend Finished.
+![](https://raw.githubusercontent.com/AmyangXYZ/SG_Amyang/master/static/sg1.png)
