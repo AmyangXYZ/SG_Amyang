@@ -325,7 +325,12 @@ body {
     font-family: 'Domine', serif;
     margin-top: 3.6rem;
     margin-bottom: 0;
-    line-height: 1.64;
+    line-height: 1.88;
+    word-wrap: break-word;
+}
+
+.entry-content img {
+    max-width: 722px;
 }
 
 .entry-footer {

@@ -38,7 +38,7 @@ html = `
             </div>
         </header>
         <div class="entry-content">
-            
+            {content}
         </div>
         <div class="entry-footer">
             <a class="button" href="/">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
@@ -164,7 +164,9 @@ $(function() {
                 posts=result.data;
                 if (posts.length>0) {
                      for (var i=0; i<posts.length; i++) {
-                        h = html.format({"title_url":posts[i].title.replace(" ","-"), "title":posts[i].title, "cat1":posts[i].cat, "cat2":posts[i].cat, "time":posts[i].time})
+                        h = html.format({"title_url":posts[i].title.replace(" ","-"), 
+                        "title":posts[i].title, "cat1":posts[i].cat, "cat2":posts[i].cat, 
+                        "time":posts[i].time, "content":posts[i].html.split("<p><i class=\"fa fa-tag fa-emoji\" title=\"tag\"></i></p>")[0]})
                         $(".pagination").before(h);
                      }
                 } else {
@@ -188,7 +190,9 @@ $(function() {
                 posts=result.data;
                 if (posts.length>0) {
                      for (var i=0; i<posts.length; i++) {
-                        h = html.format({"title_url":posts[i].title.replace(" ","-"), "title":posts[i].title, "cat1":posts[i].cat, "cat2":posts[i].cat, "time":posts[i].time})
+                        h = html.format({"title_url":posts[i].title.replace(" ","-"), 
+                        "title":posts[i].title, "cat1":posts[i].cat, "cat2":posts[i].cat, 
+                        "time":posts[i].time, "content":posts[i].html.split("<p><i class=\"fa fa-tag fa-emoji\" title=\"tag\"></i></p>")[0]})
                         $(".pagination").before(h);
                      }
                 } else {
