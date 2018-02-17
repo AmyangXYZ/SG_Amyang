@@ -36,8 +36,8 @@ func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	app.GET("/posts/:title/edit", controller.EditPage)
 
 	app.POST("/api/posts", controller.New)
-	app.GET("/api/posts/page/:n", controller.Page)
-	app.GET("/api/posts/:title", controller.Get)
+	app.GET("/api/posts/page/:n", controller.PaginationHome)
+	app.GET("/api/posts/category/:cat/page/:n", controller.PaginationCat)
 	app.PUT("/api/posts/:title", controller.Update)
 
 	app.POST("/api/files", controller.Upload)

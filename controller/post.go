@@ -8,6 +8,29 @@ import (
 	"github.com/AmyangXYZ/sweetygo"
 )
 
+// Home Page Handler.
+func Home(ctx *sweetygo.Context) {
+	ctx.Set("title", "Home")
+	posts, err := model.GetPosts("1")
+	if err != nil {
+		ctx.Text(500, "something error")
+	}
+	ctx.Set("posts", posts)
+	ctx.Render(200, "home")
+}
+
+// PaginationHome returns 5 posts per page.
+// for load-more button of Home Page.
+func PaginationHome(ctx *sweetygo.Context) {
+	if page := ctx.Param("n"); page != "" {
+		posts, err := model.GetPosts(page)
+		if err != nil {
+			ctx.Text(500, "something error")
+		}
+		ctx.JSON(200, posts, "success")
+	}
+}
+
 // Show Post Page Handler.
 func Show(ctx *sweetygo.Context) {
 	if title := ctx.Param("title"); title != "" {
@@ -46,9 +69,18 @@ func Cat(ctx *sweetygo.Context) {
 	}
 }
 
-// Page shows 5 posts per page.
-func Page(ctx *sweetygo.Context) {
-	ctx.Text(200, "page is "+ctx.Param("n"))
+// PaginationCat returns 5 posts per page.
+// for load more of Cat Page.
+func PaginationCat(ctx *sweetygo.Context) {
+	page := ctx.Param("n")
+	cat := ctx.Param("cat")
+	if page != "" && cat != "" {
+		posts, err := model.GetPostsByCat(cat, page)
+		if err != nil {
+			ctx.Text(500, "something error")
+		}
+		ctx.JSON(200, posts, "success")
+	}
 }
 
 // NewPage is Create Post Page Handler
@@ -67,60 +99,6 @@ func EditPage(ctx *sweetygo.Context) {
 	post, _ := model.GetPostByTitle(title)
 	ctx.Set("post", post)
 	ctx.Render(200, "posts/edit")
-}
-
-// Get Post API Handler.
-//
-// Usage:
-// 	"/api/posts/Hello" 		-> the post.
-func Get(ctx *sweetygo.Context) {
-	if title := ctx.Param("title"); title != "" {
-		post, err := model.GetPostByTitle(title)
-		if err != nil {
-			ctx.JSON(200, "Get Posts Error", "error")
-			return
-		}
-		// no data
-		if post.ID == 0 {
-			ctx.JSON(200, "There's nothing you want.", "fail")
-			return
-		}
-		ctx.JSON(200, post, "success")
-		return
-	}
-
-	if page := ctx.Param("page"); page != "" {
-		if cat := ctx.Param("cat"); cat != "" {
-			posts, err := model.GetPostsByCat(cat, page)
-			if err != nil {
-				ctx.JSON(500, "Get Posts Error", "error")
-				return
-			}
-			// no data
-			if len(posts) == 0 {
-				ctx.JSON(200, "There's nothing u want.", "fail")
-				return
-			}
-			data := map[string][]model.Post{"posts": posts}
-			ctx.JSON(200, data, "success")
-			return
-		}
-
-		posts, err := model.GetPosts(page)
-		if err != nil {
-			ctx.JSON(500, "Get Posts Error", "error")
-			return
-		}
-		// no data
-		if len(posts) == 0 {
-			ctx.JSON(200, "There's nothing u want.", "fail")
-			return
-		}
-		data := map[string][]model.Post{"posts": posts}
-		ctx.JSON(200, data, "success")
-		return
-	}
-	ctx.JSON(200, "I don't understand what u want.", "fail")
 }
 
 // New Post API Handler.

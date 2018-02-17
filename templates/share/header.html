@@ -6,6 +6,7 @@
         <title>SG_Amyang | {{ .title }}</title>
         <link rel="stylesheet" href="/static/layout.css">
         <link rel="stylesheet" href="/static/font-awesome/css/font-awesome.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />  
         <script src="/static/jquery-3.1.1.min.js"></script>
         <script src="/static/base.js"></script>
         <script type="text/javascript" src="/static//highlightjs/highlight.pack.js"></script>
@@ -50,18 +51,35 @@
 
         {{ template "share/popbox" }}
 
-        <div class="cover" {{ if eq .title "Home" }} style="height:815px" {{ end }}>
-            {{ if eq .title "Home"}}
+        <div class="cover">
             <div class="cover-item">
                 <div class="cover-item-container">
-                    <div class="entry-header">
-                        <h1 style="font-size: 5.6rem">Amyang's Blog</h1>
-                    </div>
+                    <header class="entry-header">
+                        <h1 class="entry-title" style="font-size: 6.4rem; text-transform: uppercase">
+                            {{ if eq .title "Home"}} Amyang's Blog      {{ end }}
+                            {{ if .show }}           {{ .title }}       {{ end }}
+                            {{ if .editor }}         {{ .title }} Post  {{ end }}
+                            {{ if .cat }}            {{ .title }}       {{ end }}
+                        </h1>
+                        {{ if .show }}
+                        <div class="entry-meta">
+                            <div class="meta-item" style="color: white">
+                                By Amyang
+                            </div>
+                            <div class="meta-item" style="color: white">
+                                In 
+                                <a style="color: white" href="/posts/category/{{ .post.Cat }}">{{ .post.Cat }}</a>
+                            </div>
+                            <div class="meta-item-time" style="color: white">
+                                {{ .post.Time }}
+                            </div>
+                        </div>
+                    {{ end }}
+                    </header>
                 </div>
             </div>
-            {{ end }}
             <img src="/static/cover.jpg">
-            <div class="wrapper" {{ if eq .title "Home" }} style="height:815px" {{ end }}></div>
+            <div class="wrapper"></div>
         </div>
 
         {{ template "share/sidebar" }}
