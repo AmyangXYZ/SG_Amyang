@@ -1,23 +1,23 @@
-{{ define "posts/new"}}
+{{ define "posts/edit"}}
 
         {{ template "share/header" .}}
         <div class="bg">
             <div class="section">
                 <div class="posts">
                     <div class="post" style="text-align:center">
-                        <form id="NewPostForm" action="/api/posts" method="POST">                               
+                        <form id="UpdatePostForm" action="/api/posts">                               
                             <ul style="list-style: none; padding: 0;">
                                 <li>
                                     <strong id="editPost-strong">Title:&nbsp;</strong>
-                                    <input name="title" id="title" type="text" style="margin-left: 20px; width: 420px; margin-bottom: 1rem">
+                                    <input name="title" id="title" type="text" value="{{ .post.Title }}">
                                 </li>
                                 <li>
                                     <strong id="editPost-strong">Category:&nbsp;</strong>
-                                    <input name="cat" type="text">
+                                    <input name="cat" type="text" value="{{ .post.Cat }}" >
                                 </li>
                             </ul>
                             <div id="editormd">
-                                <textarea style="display:none;"></textarea>
+                                <textarea>{{ .post.MD }}</textarea>
                             </div>
                             <input class="button" style="margin-top: 5rem" name="submit" value="submit" type="submit">
                         </form>

@@ -36,10 +36,11 @@ func Cat(ctx *sweetygo.Context) {
 			ctx.Error("get posts error", 200)
 			return
 		}
-		ctx.Set("posts", posts)
 		b := []byte(cat)
 		b[0] -= 32 // uppercase
 		cat = string(b)
+		ctx.Set("cat", true)
+		ctx.Set("posts", posts)
 		ctx.Set("title", cat)
 		ctx.Render(200, "posts/cat")
 	}
@@ -65,7 +66,7 @@ func EditPage(ctx *sweetygo.Context) {
 	title = strings.Replace(title, "-", " ", -1)
 	post, _ := model.GetPostByTitle(title)
 	ctx.Set("post", post)
-	ctx.Render(200, "posts/update")
+	ctx.Render(200, "posts/edit")
 }
 
 // Get Post API Handler.

@@ -107,7 +107,6 @@ $(function() {
 
     $("#loadmore").click(function(){
         $.ajax({
-            async: false,
             type: "POST",
             url: "/api/posts",
             headers: {
