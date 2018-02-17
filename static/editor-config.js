@@ -1,5 +1,5 @@
 $(function() {
-    var editor = editormd("editormd", {
+        var editor = editormd("editormd", {
         path : "/static/editor-md/lib/",
         width: 1050,
         height: 640,
@@ -11,9 +11,8 @@ $(function() {
     $('#NewPostForm').submit(function (event) {
         event.preventDefault();
         var form = $(this);
-        data = form.serialize();
-        data += "&html="+editor.getHTML();
-        data += "&md="+editor.getMarkdown();
+        data = {"title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
+        console.log(data);
         title = $("#title").val().replace(" ","-");
         $.ajax({
             async: false,
@@ -39,9 +38,7 @@ $(function() {
     $('#UpdatePostForm').submit(function (event) {
         event.preventDefault();
         var form = $(this);
-        data = form.serialize();
-        data += "&html="+editor.getHTML();
-        data += "&md="+editor.getMarkdown();
+        data = {"title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
         title = $("#title").val();
         $.ajax({
             async: false,

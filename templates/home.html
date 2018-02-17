@@ -29,10 +29,10 @@
                                     </div>
                                 </header>
                                 <div class="entry-content">
-                                    
+                                    {{ .HTML | abstract | unescaped}}
                                 </div>
                                 <div class="entry-footer">
-                                    <a class="button" href="/">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
+                                    <a class="button" href="/posts/{{ .Title | space2hyphen }}">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
                                 </div>
                             </article>
                             {{ end }}

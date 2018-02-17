@@ -10,7 +10,7 @@
                         <div class="posts">
                             <article class="post">
                                 <div class="entry-content">
-                                    {{ .post.HTML | unescaped }}
+                                    {{ .post.HTML | rmtag | unescaped }}
                                 </div>
                             </article>
                         </div>
