@@ -18,7 +18,8 @@ var (
 
 // SetMiddlewares for SweetyGo APP.
 func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
-	app.USE(middlewares.Logger(os.Stdout))
+	logfile, _ := os.Create("access.log")
+	app.USE(middlewares.Logger(logfile))
 	app.USE(middlewares.JWT("Header", controller.SecretKey, requireJWTMap))
 	return app
 }
@@ -27,8 +28,6 @@ func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 	app.GET("/", controller.Home)
-
-	app.Static("/uploadsfolder", "/home/amyang/Projects/SG_Amyang/uploadsfolder")
 
 	app.GET("/posts/new", controller.NewPage)
 	app.GET("/posts/category/:cat", controller.Cat)
