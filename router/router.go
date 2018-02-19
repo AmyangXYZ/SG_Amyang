@@ -3,6 +3,7 @@ package router
 import (
 	"os"
 
+	"github.com/AmyangXYZ/SG_Amyang/config"
 	"github.com/AmyangXYZ/SG_Amyang/controller"
 	"github.com/AmyangXYZ/sweetygo"
 	"github.com/AmyangXYZ/sweetygo/middlewares"
@@ -20,7 +21,7 @@ var (
 func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	logfile, _ := os.Create("access.log")
 	app.USE(middlewares.Logger(logfile))
-	app.USE(middlewares.JWT("Header", controller.SecretKey, requireJWTMap))
+	app.USE(middlewares.JWT("Header", config.SecretKey, requireJWTMap))
 	return app
 }
 
