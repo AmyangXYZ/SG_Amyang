@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	"../model"
+	"github.com/AmyangXYZ/SG_Amyang/model"
 	"github.com/AmyangXYZ/sweetygo"
 )
 

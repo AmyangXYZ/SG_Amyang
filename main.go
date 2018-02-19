@@ -4,7 +4,8 @@ import (
 	"html/template"
 	"strings"
 
-	"./router"
+	"github.com/AmyangXYZ/SG_Amyang/config"
+	"github.com/AmyangXYZ/SG_Amyang/router"
 	"github.com/AmyangXYZ/sweetygo"
 )
 
@@ -30,7 +31,7 @@ func rmtag(s string) string {
 func main() {
 	funcMap := template.FuncMap{"unescaped": unescaped,
 		"space2hyphen": space2hyphen, "abstract": abstract, "rmtag": rmtag}
-	app := sweetygo.New("/home/amyang/Projects/SG_Amyang/", funcMap)
+	app := sweetygo.New(config.RootDir, funcMap)
 	router.SetMiddlewares(app)
 	router.SetRouter(app)
 	app.RunServer(":16311")

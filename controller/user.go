@@ -3,15 +3,10 @@ package controller
 import (
 	"time"
 
-	"../model"
-
+	"github.com/AmyangXYZ/SG_Amyang/config"
+	"github.com/AmyangXYZ/SG_Amyang/model"
 	"github.com/AmyangXYZ/sweetygo"
 	jwt "github.com/dgrijalva/jwt-go"
-)
-
-var (
-	// SecretKey is for JWT.
-	SecretKey = "secret"
 )
 
 // Login API Handler.
@@ -28,7 +23,7 @@ func Login(ctx *sweetygo.Context) {
 			claims["name"] = "Amyang"
 			claims["admin"] = true
 			claims["exp"] = time.Now().Add(time.Hour * 4).Unix()
-			t, _ := token.SignedString([]byte(SecretKey))
+			t, _ := token.SignedString([]byte(config.SecretKey))
 			ctx.JSON(200, map[string]string{"SG_Token": t}, "success")
 			return
 		}

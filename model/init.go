@@ -3,6 +3,7 @@ package model
 import (
 	"database/sql"
 
+	"github.com/AmyangXYZ/SG_Amyang/config"
 	//
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -27,7 +28,7 @@ import (
 var db *sql.DB
 
 func init() {
-	db, _ = sql.Open("mysql", "root:0311@/sg_amyang?charset=utf8")
+	db, _ = sql.Open("mysql", config.DB)
 	if err := db.Ping(); err != nil {
 		panic(err)
 	}

@@ -3,7 +3,7 @@ package router
 import (
 	"os"
 
-	"../controller"
+	"github.com/AmyangXYZ/SG_Amyang/controller"
 	"github.com/AmyangXYZ/sweetygo"
 	"github.com/AmyangXYZ/sweetygo/middlewares"
 )
