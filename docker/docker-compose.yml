@@ -15,8 +15,8 @@ services:
     build: 
       context: ../
       dockerfile: docker/Dockerfile
-    ports:
-      - "16311:16311"
+    expose:
+      - "16311"
     depends_on:
       - db
     links:
