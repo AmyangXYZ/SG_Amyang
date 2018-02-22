@@ -3,14 +3,12 @@ version: '3'
 services:
   db:
     image: mariadb
-    # volumes:
-    #   - /home/amyang/mysql-docker:/var/lib/mysql
     expose:
       - "3306"
     environment:
       - MYSQL_ROOT_PASSWORD=031111
       - MYSQL_USER=SuperSweetie
-      - MYSQL_PASSWORD=031111
+      - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=sg_amyang
 
   app:
@@ -26,7 +24,7 @@ services:
     restart:
       always
     environment:
-      - DB_Passwd=031111
+      - DB_Passwd=password
       - SecretKey=biubiubiu
     volumes:
       - ../uploadsfolder:/uploadsfolder
@@ -47,3 +45,4 @@ services:
       - ../uploadsfolder:/uploadsfolder
       - ./nginx/nginx.conf:/etc/nginx/nginx.conf
       - ./nginx/sites-enabled:/etc/nginx/sites-enabled
+      # - /etc/letsencrypt/:/etc/letsencrypt
