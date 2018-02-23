@@ -15,6 +15,10 @@ func init() {
 	if err := db.Ping(); err != nil {
 		panic(err)
 	}
+
+	// https://github.com/go-sql-driver/mysql/issues/674
+	db.SetMaxIdleConns(0)
+
 	db.Exec(`
 		CREATE TABLE IF NOT EXISTS users (
 			id INT(10) NOT NULL AUTO_INCREMENT,
