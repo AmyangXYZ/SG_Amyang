@@ -986,6 +986,12 @@ body {
 	}
 }
 
+@media only screen and  (max-width:1000px) {
+    .entry-content img {
+        max-width: 320px;
+    }
+}
+
 @media only screen and  (max-width:320px) {
 
 	.sidebar-header {
