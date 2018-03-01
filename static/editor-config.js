@@ -37,12 +37,13 @@ $(function() {
     $('#UpdatePostForm').submit(function (event) {
         event.preventDefault();
         var form = $(this);
-        data = {"new-title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
-        title = $("#title").val().replace(/ /g,"-");
+        data = {"new-title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()};
+        old_title = window.location.pathname.split("/")[2];
+        new_title = $("#title").val();
         $.ajax({
             async: false,
             type: "PUT",
-            url: form.attr('action')+"/"+title,
+            url: form.attr('action')+"/"+old_title,
             data: data,
             dataType: "JSON",
             headers: {
@@ -51,7 +52,7 @@ $(function() {
         }).done(function(result) {
             if(result.status=="success"){
                 alert("Updated!");
-                $(location).attr('href', '/posts/'+title);
+                $(location).attr('href', '/posts/'+new_title.replace(/ /g,"-"));
             } else {
                 alert(result.message);
             }
