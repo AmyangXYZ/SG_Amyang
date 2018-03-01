@@ -38,7 +38,7 @@ $(function() {
     $('#UpdatePostForm').submit(function (event) {
         event.preventDefault();
         var form = $(this);
-        data = {"title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
+        data = {"new-title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
         title = $("#title").val();
         $.ajax({
             async: false,
