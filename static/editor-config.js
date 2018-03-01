@@ -43,7 +43,7 @@ $(function() {
         $.ajax({
             async: false,
             type: "PUT",
-            url: form.attr('action')+"/"+old_title,
+            url: form.attr('action')+"/"+old_title.replace(/-/g," "),
             data: data,
             dataType: "JSON",
             headers: {
