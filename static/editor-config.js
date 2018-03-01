@@ -12,8 +12,7 @@ $(function() {
         event.preventDefault();
         var form = $(this);
         data = {"title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
-        console.log(data);
-        title = $("#title").val().replace(" ","-");
+        title = $("#title").val().replace(/ /g,"-");
         $.ajax({
             async: false,
             type: "POST",
@@ -39,7 +38,7 @@ $(function() {
         event.preventDefault();
         var form = $(this);
         data = {"new-title":$("#title").val(), "cat":$("#cat").val(), "html":editor.getHTML(), "md":editor.getMarkdown()}
-        title = $("#title").val();
+        title = $("#title").val().replace(/ /g,"-");
         $.ajax({
             async: false,
             type: "PUT",
@@ -52,7 +51,7 @@ $(function() {
         }).done(function(result) {
             if(result.status=="success"){
                 alert("Updated!");
-                $(location).attr('href', '/posts/'+title.replace(" ","-"));
+                $(location).attr('href', '/posts/'+title);
             } else {
                 alert(result.message);
             }
