@@ -127,12 +127,13 @@ func New(ctx *sweetygo.Context) {
 // Usage:
 // 	"/api/post" -X PUT -d "title=xx&cat=xx&text=xx"
 func Update(ctx *sweetygo.Context) {
-	title := ctx.Param("title")
+	oldTitle := ctx.Param("title")     // from url
+	newTitle := ctx.Param("new-title") // from form
 	cat := ctx.Param("cat")
 	html := ctx.Param("html")
 	md := ctx.Param("md")
-	if title != "" && cat != "" && html != "" && md != "" {
-		err := model.UpdatePost(title, cat, html, md)
+	if newTitle != "" && cat != "" && html != "" && md != "" {
+		err := model.UpdatePost(newTitle, cat, html, md, oldTitle)
 		if err != nil {
 			fmt.Println(err)
 			ctx.JSON(200, "update post error", "error")

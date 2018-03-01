@@ -75,11 +75,11 @@ func NewPost(title, cat, html, md string) error {
 }
 
 // UpdatePost updates an existed post.
-func UpdatePost(title, cat, html, md string) error {
+func UpdatePost(newTitle, cat, html, md, oldTitle string) error {
 	stmt, err := db.Prepare("UPDATE posts SET title=?, cat=?, html=?, md=? WHERE title=?")
 	if err != nil {
 		return err
 	}
-	_, err = stmt.Exec(title, cat, html, md, title)
+	_, err = stmt.Exec(newTitle, cat, html, md, oldTitle)
 	return err
 }
