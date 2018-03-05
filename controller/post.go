@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/AmyangXYZ/SG_Amyang/model"
@@ -113,13 +112,13 @@ func New(ctx *sweetygo.Context) {
 	if title != "" && cat != "" && html != "" && md != "" {
 		err := model.NewPost(title, cat, html, md)
 		if err != nil {
-			ctx.JSON(200, "create post error", "error")
+			ctx.JSON(500, "create post error", "error")
 			return
 		}
 		ctx.JSON(201, "", "success")
 		return
 	}
-	ctx.JSON(200, "I can't understand what u want", "fail")
+	ctx.JSON(406, "I can't understand what u want", "fail")
 }
 
 // Update Post API Handler.
@@ -135,12 +134,11 @@ func Update(ctx *sweetygo.Context) {
 	if newTitle != "" && cat != "" && html != "" && md != "" {
 		err := model.UpdatePost(newTitle, cat, html, md, oldTitle)
 		if err != nil {
-			fmt.Println(err)
-			ctx.JSON(200, "update post error", "error")
+			ctx.JSON(500, "update post error", "error")
 			return
 		}
 		ctx.JSON(201, "", "success")
 		return
 	}
-	ctx.JSON(200, "I can't understand what u want", "fail")
+	ctx.JSON(406, "I can't understand what u want", "fail")
 }
