@@ -395,7 +395,7 @@ body {
     display: block;
     -webkit-box-pack: center;
     justify-content: center;
-    margin-bottom: 5rem;
+    padding-bottom: 5rem;
     width: 100%;
 }
 
