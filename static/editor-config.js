@@ -6,6 +6,7 @@ $(function() {
         emoji: true,
         saveHTMLToTextarea : true,
         codeFold : true,
+        taskList : true,
     });
 
     $('#NewPostForm').submit(function (event) {
