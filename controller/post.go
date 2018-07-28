@@ -26,7 +26,7 @@ func PaginationHome(ctx *sweetygo.Context) {
 		if err != nil {
 			ctx.Text(500, "something error")
 		}
-		ctx.JSON(200, posts, "success")
+		ctx.JSON(200, 1, "success", posts)
 	}
 }
 
@@ -78,7 +78,7 @@ func PaginationCat(ctx *sweetygo.Context) {
 		if err != nil {
 			ctx.Text(500, "something error")
 		}
-		ctx.JSON(200, posts, "success")
+		ctx.JSON(200, 1, "success", posts)
 	}
 }
 
@@ -112,13 +112,13 @@ func New(ctx *sweetygo.Context) {
 	if title != "" && cat != "" && html != "" && md != "" {
 		err := model.NewPost(title, cat, html, md)
 		if err != nil {
-			ctx.JSON(500, "create post error", "error")
+			ctx.JSON(500, 0, "create post error", nil)
 			return
 		}
-		ctx.JSON(201, "", "success")
+		ctx.JSON(201, 1, "success", nil)
 		return
 	}
-	ctx.JSON(406, "I can't understand what u want", "fail")
+	ctx.JSON(406, 0, "I can't understand what u want", nil)
 }
 
 // Update Post API Handler.
@@ -134,11 +134,11 @@ func Update(ctx *sweetygo.Context) {
 	if newTitle != "" && cat != "" && html != "" && md != "" {
 		err := model.UpdatePost(newTitle, cat, html, md, oldTitle)
 		if err != nil {
-			ctx.JSON(500, "update post error", "error")
+			ctx.JSON(500, 0, "update post error", nil)
 			return
 		}
-		ctx.JSON(201, "", "success")
+		ctx.JSON(201, 1, "success", nil)
 		return
 	}
-	ctx.JSON(406, "I can't understand what u want", "fail")
+	ctx.JSON(406, 0, "I can't understand what u want", nil)
 }

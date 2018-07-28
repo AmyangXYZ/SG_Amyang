@@ -14,7 +14,7 @@ func Login(ctx *sweetygo.Context) {
 	if ctx.Param("name") != "" && ctx.Param("passwd") != "" {
 		name, passwd, err := model.GetAdmin()
 		if err != nil {
-			ctx.JSON(500, "Database Error", "error")
+			ctx.JSON(500, 0, "Database Error", nil)
 			return
 		}
 		if name == ctx.Param("name") && passwd == ctx.Param("passwd") {
@@ -24,9 +24,9 @@ func Login(ctx *sweetygo.Context) {
 			claims["admin"] = true
 			claims["exp"] = time.Now().Add(time.Hour * 4).Unix()
 			t, _ := token.SignedString([]byte(config.SecretKey))
-			ctx.JSON(200, map[string]string{"SG_Token": t}, "success")
+			ctx.JSON(200, 1, "success", map[string]string{"SG_Token": t})
 			return
 		}
-		ctx.JSON(200, "Username or Password Error.", "fail")
+		ctx.JSON(200, 0, "Username or Password Error.", nil)
 	}
 }

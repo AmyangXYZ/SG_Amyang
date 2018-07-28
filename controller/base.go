@@ -13,9 +13,13 @@ func Upload(ctx *sweetygo.Context) {
 	filename, err := ctx.SaveFile("file", config.RootDir+saveDir)
 	fmt.Println(filename)
 	if err != nil {
-		ctx.JSON(200, "upload file error", "error")
+		ctx.JSON(200, 0, "upload file error", nil)
 		return
 	}
 	filePath := "/" + saveDir + filename
-	ctx.JSON(200, filePath, "success")
+	ctx.JSON(200, 1, "success", filePath)
+}
+
+func GoogleVerify(ctx *sweetygo.Context) {
+	ctx.Text(200, `google-site-verification: google9c7bdbb18c542f25.html`)
 }
