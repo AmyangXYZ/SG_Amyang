@@ -109,7 +109,7 @@ $(function() {
             data: form.serialize(),
             dataType: "JSON",
         }).done(function (result) {
-            if (result.status == "success") {
+            if (result.flag == 1) {
                 localStorage.setItem("SG_Token", result.data.SG_Token);
                 alert("Welcome Home, my Master");
                 $("#signin-box").hide();

@@ -24,7 +24,7 @@ $(function() {
                 "Authorization": "SG_Token "+localStorage.getItem("SG_Token")
             }
         }).done(function(result) {
-            if(result.status=="success"){
+            if(result.flag==1){
                 alert("Created !");
                 $(location).attr('href', '/posts/'+title);
             } else {
@@ -51,7 +51,7 @@ $(function() {
                 "Authorization": "SG_Token "+localStorage.getItem("SG_Token")
             }
         }).done(function(result) {
-            if(result.status=="success"){
+            if(result.flag==1){
                 alert("Updated!");
                 $(location).attr('href', '/posts/'+new_title.replace(/ /g,"-"));
             } else {
