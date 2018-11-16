@@ -25,6 +25,7 @@ func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 	app.GET("/", controller.Home)
+	app.GET("/static/*files", controller.Static)
 	app.GET("/google9c7bdbb18c542f25.html", controller.GoogleVerify)
 	app.GET("/posts/new", controller.NewPage)
 	app.GET("/posts/category/:cat", controller.Cat)
@@ -39,5 +40,6 @@ func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	app.POST("/api/files", controller.Upload)
 
 	app.POST("/api/token", controller.Login)
+
 	return app
 }

@@ -17,6 +17,6 @@ var (
 )
 
 func init() {
-	DB = fmt.Sprintf("SuperSweetie:%v@tcp(db:3306)/sg_amyang?charset=utf8", os.Getenv("DB_Passwd"))
+	DB = fmt.Sprintf("root:%v@tcp(127.0.0.1:3306)/sg_amyang?charset=utf8", os.Getenv("DB_Passwd"))
 	SecretKey = os.Getenv("SecretKey")
 }

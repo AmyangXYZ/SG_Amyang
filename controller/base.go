@@ -2,6 +2,7 @@ package controller
 
 import (
 	"fmt"
+	"net/http"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
 	"github.com/AmyangXYZ/sweetygo"
@@ -20,6 +21,14 @@ func Upload(ctx *sweetygo.Context) {
 	ctx.JSON(200, 1, "success", filePath)
 }
 
+// GoogleVerify .
 func GoogleVerify(ctx *sweetygo.Context) {
 	ctx.Text(200, `google-site-verification: google9c7bdbb18c542f25.html`)
+}
+
+// Static files handler
+func Static(ctx *sweetygo.Context) {
+	staticHandle := http.StripPrefix("/static",
+		http.FileServer(http.Dir("/root/SG_Amyang/static")))
+	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }
