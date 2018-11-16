@@ -1,6 +1,7 @@
 package router
 
 import (
+	"net/http"
 	"os"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
@@ -28,6 +29,7 @@ func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 // SetRouter for SweetyGo APP.
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
+	go http.ListenAndServe(":8000", http.HandlerFunc(controller.RedirectTLS))
 
 	app.GET("/", controller.Home)
 	app.GET("/static/*files", controller.Static)

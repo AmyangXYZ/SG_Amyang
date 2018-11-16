@@ -39,3 +39,8 @@ func Uploaded(ctx *sweetygo.Context) {
 		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/uploadsfolder")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }
+
+// RedirectQUIC .
+func RedirectQUIC(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "https://amyang.xyz:443"+r.RequestURI, http.StatusMovedPermanently)
+}
