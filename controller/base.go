@@ -32,3 +32,10 @@ func Static(ctx *sweetygo.Context) {
 		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/static")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }
+
+// Uplaoded files handler
+func Uploaded(ctx *sweetygo.Context) {
+	staticHandle := http.StripPrefix("/uploadsfolder",
+		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/uploadsfolder")))
+	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
+}

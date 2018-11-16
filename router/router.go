@@ -31,6 +31,8 @@ func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 	app.GET("/", controller.Home)
 	app.GET("/static/*files", controller.Static)
+	app.GET("/uploadsfolder/*files", controller.Uploaded)
+
 	app.GET("/google9c7bdbb18c542f25.html", controller.GoogleVerify)
 	app.GET("/posts/new", controller.NewPage)
 	app.GET("/posts/category/:cat", controller.Cat)
