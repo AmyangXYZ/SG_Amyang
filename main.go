@@ -34,5 +34,5 @@ func main() {
 	app := sweetygo.New(config.RootDir, funcMap)
 	router.SetMiddlewares(app)
 	router.SetRouter(app)
-	app.RunServer(":16311")
+	app.RunServerOverQUIC(":16311", "/etc/letsencrypt/live/amyang.xyz/cert.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
 }
