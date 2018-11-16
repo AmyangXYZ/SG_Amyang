@@ -29,7 +29,7 @@ func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 
 // SetRouter for SweetyGo APP.
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
-	go http.ListenAndServe(":8000", http.HandlerFunc(controller.RedirectQUIC))
+	go http.ListenAndServe(":80", http.HandlerFunc(controller.RedirectQUIC))
 
 	app.GET("/", controller.Home)
 	app.GET("/static/*files", controller.Static)
