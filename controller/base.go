@@ -29,6 +29,6 @@ func GoogleVerify(ctx *sweetygo.Context) {
 // Static files handler
 func Static(ctx *sweetygo.Context) {
 	staticHandle := http.StripPrefix("/static",
-		http.FileServer(http.Dir("/root/SG_Amyang/static")))
+		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/static")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }

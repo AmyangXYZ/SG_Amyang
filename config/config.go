@@ -7,7 +7,7 @@ import (
 
 var (
 	// RootDir of your app
-	RootDir = "/"
+	RootDir = "/root/go/src/github.com/AmyangXYZ/SG_Amyang/"
 
 	// SecretKey computes sg_token
 	SecretKey string
