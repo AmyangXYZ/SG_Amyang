@@ -35,5 +35,5 @@ func main() {
 	router.SetMiddlewares(app)
 	router.SetRouter(app)
 
-	app.RunServerOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/cert.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
+	app.RunServerOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/chain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
 }
