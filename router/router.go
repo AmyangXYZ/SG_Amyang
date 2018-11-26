@@ -1,7 +1,6 @@
 package router
 
 import (
-	"net/http"
 	"os"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
@@ -18,18 +17,33 @@ var (
 	}
 )
 
+func loggerSkipper(ctx *sweetygo.Context) bool {
+	if (len(ctx.Path()) > 8 && ctx.Path()[0:8] == "/static/") ||
+		(len(ctx.Path()) > 15 && ctx.Path()[0:15] == "/uploadsfolder/") {
+		return true
+	}
+	return false
+}
+
+func jwtSkipper(ctx *sweetygo.Context) bool {
+	if (ctx.Path() == "/api/posts" && ctx.Method() != "GET") ||
+		(len(ctx.Path()) > 11 && ctx.Path()[0:11] == "/api/posts/" && ctx.Method() != "GET") ||
+		(ctx.Path() == "/api/files" && ctx.Method() == "POST") {
+		return false
+	}
+	return true
+}
+
 // SetMiddlewares for SweetyGo APP.
 func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
-	app.USE(middlewares.JWT("Header", config.SecretKey, requireJWTMap))
-
-	f, _ := os.Create(config.RootDir + "sg.log")
-	app.USE(middlewares.Logger(f))
+	// f, _ := os.Create(config.RootDir + "sg.log")
+	app.USE(middlewares.Logger(os.Stdout, loggerSkipper))
+	app.USE(middlewares.JWT("Header", config.SecretKey, jwtSkipper))
 	return app
 }
 
 // SetRouter for SweetyGo APP.
 func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
-	go http.ListenAndServe(":80", http.HandlerFunc(controller.RedirectQUIC))
 
 	app.GET("/", controller.Home)
 	app.GET("/static/*files", controller.Static)
@@ -47,8 +61,6 @@ func SetRouter(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	app.PUT("/api/posts/:title", controller.Update)
 
 	app.POST("/api/files", controller.Upload)
-
 	app.POST("/api/token", controller.Login)
-
 	return app
 }

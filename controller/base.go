@@ -29,14 +29,14 @@ func GoogleVerify(ctx *sweetygo.Context) {
 // Static files handler
 func Static(ctx *sweetygo.Context) {
 	staticHandle := http.StripPrefix("/static",
-		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/static")))
+		http.FileServer(http.Dir(config.RootDir+"/static")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }
 
-// Uplaoded files handler
+// Uploaded files handler
 func Uploaded(ctx *sweetygo.Context) {
 	staticHandle := http.StripPrefix("/uploadsfolder",
-		http.FileServer(http.Dir("/root/go/src/github.com/AmyangXYZ/SG_Amyang/uploadsfolder")))
+		http.FileServer(http.Dir(config.RootDir+"/uploadsfolder")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 }
 

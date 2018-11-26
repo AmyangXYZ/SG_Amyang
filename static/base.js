@@ -116,7 +116,7 @@ $(function() {
                 $(".overlay").hide();
                 $("body").css("overflow", "");
             } else {
-                alert(result.message)
+                alert(result.msg)
             }
         }).fail(function(result){
             alert("some thing error")

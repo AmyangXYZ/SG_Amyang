@@ -2,6 +2,8 @@ package model
 
 import (
 	"database/sql"
+	"fmt"
+	"time"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
 	//
@@ -12,8 +14,13 @@ var db *sql.DB
 
 func init() {
 	db, _ = sql.Open("mysql", config.DB)
-	if err := db.Ping(); err != nil {
-		panic(err)
+	for {
+		if err := db.Ping(); err != nil {
+			fmt.Println(err, ", retry in 10s...")
+			time.Sleep(10 * time.Second)
+		} else {
+			break
+		}
 	}
 
 	// https://github.com/go-sql-driver/mysql/issues/674
