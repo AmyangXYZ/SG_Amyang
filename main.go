@@ -1,27 +1,63 @@
 package main
 
 import (
+	"fmt"
 	"html/template"
-	"net/http"
 	"strings"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
-	"github.com/AmyangXYZ/SG_Amyang/controller"
 	"github.com/AmyangXYZ/SG_Amyang/router"
 	"github.com/AmyangXYZ/sweetygo"
 )
 
+// Host is for subdomain control
+type Host struct {
+	SG *sweetygo.SweetyGo
+}
+
 func main() {
-	app := sweetygo.New()
+	hosts := map[string]*Host{}
 
-	app.SetTemplates(config.RootDir+"templates", template.FuncMap{"unescaped": unescaped,
-		"space2hyphen": space2hyphen, "abstract": abstract, "rmtag": rmtag})
-	router.SetMiddlewares(app)
-	router.SetRouter(app)
+	// blog
+	blog := sweetygo.New()
 
-	go http.ListenAndServe(":80", http.HandlerFunc(controller.RedirectQUIC))
-	// app.Run(":16311")
-	app.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
+	blog.SetTemplates(config.RootDir+"templates", template.FuncMap{
+		"unescaped":    unescaped,
+		"space2hyphen": space2hyphen,
+		"abstract":     abstract,
+		"rmtag":        rmtag,
+	})
+	router.SetMiddlewares(blog)
+	router.SetRouter(blog)
+	hosts["amyang.xyz"] = &Host{blog}
+
+	// biu
+	biu := sweetygo.New()
+	biu.GET("/", func(ctx *sweetygo.Context) error {
+		return ctx.Text(200, "biubiubiu")
+	})
+	hosts["biu.amyang.xyz"] = &Host{biu}
+
+	server := sweetygo.New()
+	server.Any("/*", func(ctx *sweetygo.Context) error {
+		if host := hosts[ctx.Req.Host]; host != nil {
+			host.SG.ServeHTTP(ctx.Resp, ctx.Req)
+			return nil
+		}
+		return ctx.Text(404, "404 not found")
+
+	})
+
+	// force redirect http to https
+	redirector := sweetygo.New()
+	redirector.Any("/*", func(ctx *sweetygo.Context) error {
+		ctx.Redirect(301, fmt.Sprintf("https://%s:443", ctx.Req.Host)+ctx.Path())
+		return nil
+	})
+	go redirector.Run("amyang.xyz:80")
+
+	fmt.Println(server.RunOverQUIC("amyang.xyz:443", "fullchain.pem", "privkey.pem"))
+	// server.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
 }
 
 func unescaped(s string) interface{} {

@@ -40,8 +40,3 @@ func Uploaded(ctx *sweetygo.Context) error {
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 	return nil
 }
-
-// RedirectQUIC .
-func RedirectQUIC(w http.ResponseWriter, r *http.Request) {
-	http.Redirect(w, r, "https://amyang.xyz:443"+r.RequestURI, http.StatusMovedPermanently)
-}
