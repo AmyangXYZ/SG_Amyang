@@ -28,5 +28,5 @@ func Login(ctx *sweetygo.Context) error {
 		}
 		return ctx.JSON(200, 0, "Username or Password Error.", nil)
 	}
-	ctx.JSON(406, 0, "I can't understand what u want", nil)
+	return ctx.JSON(406, 0, "I can't understand what u want", nil)
 }
