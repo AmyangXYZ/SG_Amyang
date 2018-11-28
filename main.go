@@ -20,8 +20,8 @@ func main() {
 	router.SetRouter(app)
 
 	go http.ListenAndServe(":80", http.HandlerFunc(controller.RedirectQUIC))
-	// app.Run(":16311")
-	app.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
+	app.Run(":16311")
+	// app.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
 }
 
 func unescaped(s string) interface{} {

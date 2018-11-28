@@ -9,35 +9,36 @@ import (
 )
 
 // Upload API Handler.
-func Upload(ctx *sweetygo.Context) {
+func Upload(ctx *sweetygo.Context) error {
 	saveDir := "uploadsfolder/"
 	filename, err := ctx.SaveFile("file", config.RootDir+saveDir)
 	fmt.Println(filename)
 	if err != nil {
-		ctx.JSON(200, 0, "upload file error", nil)
-		return
+		return ctx.JSON(200, 0, "upload file error", nil)
 	}
 	filePath := "/" + saveDir + filename
-	ctx.JSON(200, 1, "success", filePath)
+	return ctx.JSON(200, 1, "success", filePath)
 }
 
 // GoogleVerify .
-func GoogleVerify(ctx *sweetygo.Context) {
-	ctx.Text(200, `google-site-verification: google9c7bdbb18c542f25.html`)
+func GoogleVerify(ctx *sweetygo.Context) error {
+	return ctx.Text(200, `google-site-verification: google9c7bdbb18c542f25.html`)
 }
 
 // Static files handler
-func Static(ctx *sweetygo.Context) {
+func Static(ctx *sweetygo.Context) error {
 	staticHandle := http.StripPrefix("/static",
 		http.FileServer(http.Dir(config.RootDir+"/static")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
+	return nil
 }
 
 // Uploaded files handler
-func Uploaded(ctx *sweetygo.Context) {
+func Uploaded(ctx *sweetygo.Context) error {
 	staticHandle := http.StripPrefix("/uploadsfolder",
 		http.FileServer(http.Dir(config.RootDir+"/uploadsfolder")))
 	staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
+	return nil
 }
 
 // RedirectQUIC .

@@ -10,12 +10,11 @@ import (
 )
 
 // Login API Handler.
-func Login(ctx *sweetygo.Context) {
+func Login(ctx *sweetygo.Context) error {
 	if ctx.Param("name") != "" && ctx.Param("passwd") != "" {
 		name, passwd, err := model.GetAdmin()
 		if err != nil {
-			ctx.JSON(500, 0, "Database Error", nil)
-			return
+			return ctx.JSON(500, 0, "Database Error", nil)
 		}
 		if name == ctx.Param("name") && passwd == ctx.Param("passwd") {
 			token := jwt.New(jwt.SigningMethodHS256)
@@ -24,9 +23,10 @@ func Login(ctx *sweetygo.Context) {
 			claims["admin"] = true
 			claims["exp"] = time.Now().Add(time.Hour * 4).Unix()
 			t, _ := token.SignedString([]byte(config.SecretKey))
-			ctx.JSON(200, 1, "success", map[string]string{"SG_Token": t})
-			return
+			return ctx.JSON(200, 1, "success", map[string]string{"SG_Token": t})
+
 		}
-		ctx.JSON(200, 0, "Username or Password Error.", nil)
+		return ctx.JSON(200, 0, "Username or Password Error.", nil)
 	}
+	ctx.JSON(406, 0, "I can't understand what u want", nil)
 }

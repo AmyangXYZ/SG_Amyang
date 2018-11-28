@@ -8,55 +8,54 @@ import (
 )
 
 // Home Page Handler.
-func Home(ctx *sweetygo.Context) {
+func Home(ctx *sweetygo.Context) error {
 	ctx.Set("title", "Home")
 	posts, err := model.GetPosts("1")
 	if err != nil {
-		ctx.Text(500, "something error")
+		return err
 	}
 	ctx.Set("posts", posts)
-	ctx.Render(200, "home")
+	return ctx.Render(200, "home")
 }
 
 // PaginationHome returns 5 posts per page.
 // for load-more button of Home Page.
-func PaginationHome(ctx *sweetygo.Context) {
+func PaginationHome(ctx *sweetygo.Context) error {
 	if page := ctx.Param("n"); page != "" {
 		posts, err := model.GetPosts(page)
 		if err != nil {
-			ctx.Text(500, "something error")
+			return err
 		}
-		ctx.JSON(200, 1, "success", posts)
+		return ctx.JSON(200, 1, "success", posts)
 	}
+	return nil
 }
 
 // Show Post Page Handler.
-func Show(ctx *sweetygo.Context) {
+func Show(ctx *sweetygo.Context) error {
 	if title := ctx.Param("title"); title != "" {
 		title := strings.Replace(title, "-", " ", -1)
 		post, err := model.GetPostByTitle(title)
 		if err != nil {
-			ctx.Error("get post error", 200)
-			return
+			return err
 		}
 		if post.ID == 0 {
-			ctx.Error("404 page not found", 404)
-			return
+			return ctx.Text(404, "404 not found")
 		}
 		ctx.Set("post", post)
 		ctx.Set("title", title)
 		ctx.Set("show", true)
-		ctx.Render(200, "posts/show")
+		return ctx.Render(200, "posts/show")
 	}
+	return nil
 }
 
 // Cat shows posts sorted by category.
-func Cat(ctx *sweetygo.Context) {
+func Cat(ctx *sweetygo.Context) error {
 	if cat := ctx.Param("cat"); cat != "" {
 		posts, err := model.GetPostsByCat(cat, "1")
 		if err != nil {
-			ctx.Error("get posts error", 200)
-			return
+			return err
 		}
 		b := []byte(cat)
 		b[0] -= 32 // uppercase
@@ -64,47 +63,52 @@ func Cat(ctx *sweetygo.Context) {
 		ctx.Set("cat", true)
 		ctx.Set("posts", posts)
 		ctx.Set("title", cat)
-		ctx.Render(200, "posts/cat")
+		return ctx.Render(200, "posts/cat")
 	}
+	return nil
 }
 
 // PaginationCat returns 5 posts per page.
 // for load more of Cat Page.
-func PaginationCat(ctx *sweetygo.Context) {
+func PaginationCat(ctx *sweetygo.Context) error {
 	page := ctx.Param("n")
 	cat := ctx.Param("cat")
 	if page != "" && cat != "" {
 		posts, err := model.GetPostsByCat(cat, page)
 		if err != nil {
-			ctx.Text(500, "something error")
+			return err
 		}
-		ctx.JSON(200, 1, "success", posts)
+		return ctx.JSON(200, 1, "success", posts)
 	}
+	return nil
 }
 
 // NewPage is Create Post Page Handler
-func NewPage(ctx *sweetygo.Context) {
+func NewPage(ctx *sweetygo.Context) error {
 	ctx.Set("title", "New")
 	ctx.Set("editor", true)
-	ctx.Render(200, "posts/new")
+	return ctx.Render(200, "posts/new")
 }
 
 // EditPage is Edit Post Page Handler
-func EditPage(ctx *sweetygo.Context) {
+func EditPage(ctx *sweetygo.Context) error {
 	ctx.Set("title", "Edit")
 	ctx.Set("editor", true)
 	title := ctx.Param("title")
 	title = strings.Replace(title, "-", " ", -1)
-	post, _ := model.GetPostByTitle(title)
+	post, err := model.GetPostByTitle(title)
+	if err != nil {
+		return err
+	}
 	ctx.Set("post", post)
-	ctx.Render(200, "posts/edit")
+	return ctx.Render(200, "posts/edit")
 }
 
 // New Post API Handler.
 //
 // Usage:
 //  "/api/posts/new" -X POST -d "title=xx&cat=xx&text=xx"
-func New(ctx *sweetygo.Context) {
+func New(ctx *sweetygo.Context) error {
 	title := ctx.Param("title")
 	cat := ctx.Param("cat")
 	html := ctx.Param("html")
@@ -112,20 +116,18 @@ func New(ctx *sweetygo.Context) {
 	if title != "" && cat != "" && html != "" && md != "" {
 		err := model.NewPost(title, cat, html, md)
 		if err != nil {
-			ctx.JSON(500, 0, "create post error", nil)
-			return
+			return ctx.JSON(500, 0, "create post error", nil)
 		}
-		ctx.JSON(201, 1, "success", nil)
-		return
+		return ctx.JSON(201, 1, "success", nil)
 	}
-	ctx.JSON(406, 0, "I can't understand what u want", nil)
+	return ctx.JSON(406, 0, "I can't understand what u want", nil)
 }
 
 // Update Post API Handler.
 //
 // Usage:
 // 	"/api/post" -X PUT -d "title=xx&cat=xx&text=xx"
-func Update(ctx *sweetygo.Context) {
+func Update(ctx *sweetygo.Context) error {
 	oldTitle := ctx.Param("title")     // from url
 	newTitle := ctx.Param("new-title") // from form
 	cat := ctx.Param("cat")
@@ -134,11 +136,9 @@ func Update(ctx *sweetygo.Context) {
 	if newTitle != "" && cat != "" && html != "" && md != "" {
 		err := model.UpdatePost(newTitle, cat, html, md, oldTitle)
 		if err != nil {
-			ctx.JSON(500, 0, "update post error", nil)
-			return
+			return ctx.JSON(500, 0, "update post error", nil)
 		}
-		ctx.JSON(201, 1, "success", nil)
-		return
+		return ctx.JSON(201, 1, "success", nil)
 	}
-	ctx.JSON(406, 0, "I can't understand what u want", nil)
+	return ctx.JSON(406, 0, "I can't understand what u want", nil)
 }
