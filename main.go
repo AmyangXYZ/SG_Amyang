@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"html/template"
+	"net/http"
 	"strings"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
@@ -33,8 +34,11 @@ func main() {
 
 	// biu
 	biu := sweetygo.New()
-	biu.GET("/", func(ctx *sweetygo.Context) error {
-		return ctx.Text(200, "biubiubiu")
+	biu.GET("/*", func(ctx *sweetygo.Context) error {
+		staticHandle := http.StripPrefix("/",
+			http.FileServer(http.Dir(config.RootDir+"/biu.amyang.xyz")))
+		staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
+		return nil
 	})
 	hosts["biu.amyang.xyz"] = &Host{biu}
 
