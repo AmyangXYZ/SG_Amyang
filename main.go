@@ -9,6 +9,7 @@ import (
 	"github.com/AmyangXYZ/SG_Amyang/config"
 	"github.com/AmyangXYZ/SG_Amyang/router"
 	"github.com/AmyangXYZ/sweetygo"
+	"github.com/AmyangXYZ/sweetygo/middlewares"
 )
 
 // Host is for subdomain control
@@ -21,7 +22,6 @@ func main() {
 
 	// blog
 	blog := sweetygo.New()
-
 	blog.SetTemplates(config.RootDir+"templates", template.FuncMap{
 		"unescaped":    unescaped,
 		"space2hyphen": space2hyphen,
@@ -34,6 +34,7 @@ func main() {
 
 	// biu
 	biu := sweetygo.New()
+	biu.USE(middlewares.Gzip(6, middlewares.DefaultSkipper))
 	biu.GET("/*", func(ctx *sweetygo.Context) error {
 		staticHandle := http.StripPrefix("/",
 			http.FileServer(http.Dir(config.RootDir+"/biu.amyang.xyz")))

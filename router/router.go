@@ -38,6 +38,7 @@ func jwtSkipper(ctx *sweetygo.Context) bool {
 func SetMiddlewares(app *sweetygo.SweetyGo) *sweetygo.SweetyGo {
 	f, _ := os.Create(config.RootDir + "sg.log")
 	app.USE(middlewares.Logger(f, loggerSkipper))
+	app.USE(middlewares.Gzip(6, middlewares.DefaultSkipper))
 	app.USE(middlewares.JWT("Header", config.SecretKey, jwtSkipper))
 	return app
 }
