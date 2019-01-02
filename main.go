@@ -85,8 +85,7 @@ func main() {
 	})
 	go redirector.Run("amyang.xyz:80")
 
-	fmt.Println(server.RunOverQUIC("amyang.xyz:443", "fullchain.pem", "privkey.pem"))
-	// server.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
+	server.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
 }
 
 func proxyHandler(p *httputil.ReverseProxy) func(ctx *sweetygo.Context) error {
