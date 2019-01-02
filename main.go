@@ -59,7 +59,7 @@ func main() {
 	hacking := sweetygo.New()
 	hacking.GET("/*", func(ctx *sweetygo.Context) error {
 		staticHandle := http.StripPrefix("/",
-			http.FileServer(http.Dir(config.RootDir+"/subdomain/hacking.amyang.xyz")))
+			http.FileServer(http.Dir(config.RootDir+"/hacking.amyang.xyz")))
 		staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 		return nil
 	})
