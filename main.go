@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"html/template"
 	"net/http"
+	"net/http/httputil"
+	"net/url"
 	"strings"
 
 	"github.com/AmyangXYZ/SG_Amyang/config"
@@ -43,6 +45,13 @@ func main() {
 	})
 	hosts["biu.amyang.xyz"] = &Host{biu}
 
+	// BirdSong Recg
+	// convey the requests to birdsong-recg app powered by flask.
+	bird := sweetygo.New()
+	u, _ := url.Parse("http://172.17.0.3:80/")
+	bird.Any("/*", proxyHandler(httputil.NewSingleHostReverseProxy(u)))
+	hosts["birdsong.amyang.xyz"] = &Host{bird}
+
 	server := sweetygo.New()
 	server.Any("/*", func(ctx *sweetygo.Context) error {
 		if host := hosts[ctx.Req.Host]; host != nil {
@@ -63,6 +72,13 @@ func main() {
 
 	fmt.Println(server.RunOverQUIC("amyang.xyz:443", "fullchain.pem", "privkey.pem"))
 	// server.RunOverQUIC(":443", "/etc/letsencrypt/live/amyang.xyz/fullchain.pem", "/etc/letsencrypt/live/amyang.xyz/privkey.pem")
+}
+
+func proxyHandler(p *httputil.ReverseProxy) func(ctx *sweetygo.Context) error {
+	return func(ctx *sweetygo.Context) error {
+		p.ServeHTTP(ctx.Resp, ctx.Req)
+		return nil
+	}
 }
 
 func unescaped(s string) interface{} {
