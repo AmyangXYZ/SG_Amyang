@@ -23,6 +23,7 @@ func main() {
 	hosts := map[string]*Host{}
 
 	// blog
+	// the blog
 	blog := sweetygo.New()
 	blog.SetTemplates(config.RootDir+"templates", template.FuncMap{
 		"unescaped":    unescaped,
@@ -34,16 +35,17 @@ func main() {
 	router.SetRouter(blog)
 	hosts["amyang.xyz"] = &Host{blog}
 
-	// biu
-	biu := sweetygo.New()
-	biu.USE(middlewares.Gzip(6, middlewares.DefaultSkipper))
-	biu.GET("/*", func(ctx *sweetygo.Context) error {
+	// wasm
+	// wasm learning
+	wasm := sweetygo.New()
+	wasm.USE(middlewares.Gzip(6, middlewares.DefaultSkipper))
+	wasm.GET("/*", func(ctx *sweetygo.Context) error {
 		staticHandle := http.StripPrefix("/",
-			http.FileServer(http.Dir(config.RootDir+"/biu.amyang.xyz")))
+			http.FileServer(http.Dir(config.RootDir+"/wasm.amyang.xyz")))
 		staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
 		return nil
 	})
-	hosts["biu.amyang.xyz"] = &Host{biu}
+	hosts["wasm.amyang.xyz"] = &Host{wasm}
 
 	// BirdSong Recg
 	// convey the requests to birdsong-recg app powered by flask.
@@ -52,6 +54,19 @@ func main() {
 	bird.Any("/*", proxyHandler(httputil.NewSingleHostReverseProxy(u)))
 	hosts["birdsong.amyang.xyz"] = &Host{bird}
 
+	// hacking
+	// some evil script :)
+	hacking := sweetygo.New()
+	hacking.GET("/*", func(ctx *sweetygo.Context) error {
+		staticHandle := http.StripPrefix("/",
+			http.FileServer(http.Dir(config.RootDir+"/subdomain/hacking.amyang.xyz")))
+		staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
+		return nil
+	})
+	hosts["hacking.amyang.xyz"] = &Host{hacking}
+
+	// server
+	// distribute requests
 	server := sweetygo.New()
 	server.Any("/*", func(ctx *sweetygo.Context) error {
 		if host := hosts[ctx.Req.Host]; host != nil {
