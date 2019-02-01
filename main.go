@@ -11,7 +11,6 @@ import (
 	"github.com/AmyangXYZ/SG_Amyang/config"
 	"github.com/AmyangXYZ/SG_Amyang/router"
 	"github.com/AmyangXYZ/sweetygo"
-	"github.com/AmyangXYZ/sweetygo/middlewares"
 )
 
 // Host is for subdomain control
@@ -34,18 +33,6 @@ func main() {
 	router.SetMiddlewares(blog)
 	router.SetRouter(blog)
 	hosts["amyang.xyz"] = &Host{blog}
-
-	// wasm
-	// wasm learning
-	wasm := sweetygo.New()
-	wasm.USE(middlewares.Gzip(6, middlewares.DefaultSkipper))
-	wasm.GET("/*", func(ctx *sweetygo.Context) error {
-		staticHandle := http.StripPrefix("/",
-			http.FileServer(http.Dir(config.RootDir+"/wasm.amyang.xyz")))
-		staticHandle.ServeHTTP(ctx.Resp, ctx.Req)
-		return nil
-	})
-	hosts["wasm.amyang.xyz"] = &Host{wasm}
 
 	// BirdSong Recg
 	// convey the requests to birdsong-recg app powered by flask.
@@ -113,3 +100,4 @@ func abstract(s string) string {
 func rmtag(s string) string {
 	return strings.Replace(s, "<p><i class=\"fa fa-tag fa-emoji\" title=\"tag\"></i></p>", "", -1)
 }
+
