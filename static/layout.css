@@ -28,6 +28,14 @@ body {
     box-sizing: inherit;
 }
 
+blockquote {
+    color: #666;
+    border-left: 4px solid #ddd;
+    padding-left: 20px;
+    margin-left: 0;
+    font-style: italic;
+}
+
 .header {   
     height: 110px;
     width: 100%;
