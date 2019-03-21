@@ -1,6 +1,6 @@
 # SG_Amyang
 
-New Blog of Amyang.
+New Blog of [Amyang](https://amyang.xyz).
 
 Powered by [SweetyGo](https://github.com/AmyangXYZ/sweetygo)
 
