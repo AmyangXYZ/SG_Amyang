@@ -67,6 +67,14 @@ $(function() {
         }
     })
 
+    // render katex
+    $(".entry-content").find(".editormd-tex").each(function(){
+        var tex  = $(this);
+        katex.render(tex.text(), tex[0]);
+        
+        tex.css("text-align", "center");
+    }); 
+
     // show line number for hljs
     $('code.hljs').each(function(i, block) {
         hljs.lineNumbersBlock(block);
