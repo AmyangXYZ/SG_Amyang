@@ -41,7 +41,7 @@ html = `
             {content}
         </div>
         <div class="entry-footer">
-            <a class="button" href="/">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
+            <a class="button" href="/posts/{readon_url}">Read on&nbsp;&nbsp;<i class="fa fa-angle-double-right"></i></a>
         </div>
     </article>
 `
@@ -66,14 +66,6 @@ $(function() {
             $("#headerbar").css("background", "black");
         }
     })
-
-    // render katex
-    $(".entry-content").find(".editormd-tex").each(function(){
-        var tex  = $(this);
-        katex.render(tex.text(), tex[0]);
-        
-        tex.css("text-align", "center");
-    }); 
 
     // show line number for hljs
     $('code.hljs').each(function(i, block) {
@@ -174,7 +166,8 @@ $(function() {
                      for (var i=0; i<posts.length; i++) {
                         h = html.format({"title_url":posts[i].title.replace(/ /g,"-"), 
                         "title":posts[i].title, "cat1":posts[i].cat, "cat2":posts[i].cat, 
-                        "time":posts[i].time, "content":posts[i].html.split("<p><i class=\"fa fa-tag fa-emoji\" title=\"tag\"></i></p>")[0]})
+                        "time":posts[i].time, "content":posts[i].html.split("<p><i class=\"fa fa-tag fa-emoji\" title=\"tag\"></i></p>")[0],
+                        "readon_url":posts[i].title.replace(/ /g,"-")})
                         $(".pagination").before(h);
                      }
                 } else {
@@ -213,4 +206,5 @@ $(function() {
         });
     })
 });
+
 
