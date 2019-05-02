@@ -1,3 +1,6 @@
+::selection {
+    background: #D6EDFF;
+}
 @font-face {
     font-family: "Josefin";
     src: url("/static/JosefinSans.ttf")
@@ -71,7 +74,7 @@ blockquote {
     height: inherit;
 }
 
-.slot-l h1 {
+.slot-l h3 {
     display: table-cell;
     vertical-align: middle;
 }
