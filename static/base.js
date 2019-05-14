@@ -54,6 +54,7 @@ $(function() {
         if (h<670) {    
             $("#headerbar").css("top", 0);
             $("#headerbar").css("height","110px");
+	    $(".slot-l").css("height","110px");
             $("#headerbar").css("background", "transparent");
         }
         if (h>670 && h<1000) {
@@ -63,6 +64,7 @@ $(function() {
         if (h>1000) {
             $("#headerbar").css("top", 0);
             $("#headerbar").css("height","70px");
+            $(".slot-l").css("height","70px");
             $("#headerbar").css("background", "black");
         }
     })
